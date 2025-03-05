@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: Vayal-AI
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: ""
+    startCommand: node index.js
+    autoDeploy: true
