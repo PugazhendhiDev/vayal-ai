@@ -251,18 +251,16 @@ body {
   display: flex;
   flex-direction: row;
   overflow-y: auto;
-  gap: 10px;
+  gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
   padding-bottom: 30px;
   scrollbar-width: none;
   margin-top: 10px;
-  margin-left: 20%;
-  margin-right: 20%;
 }
 
 .page-list-items {
-  width: 150px;
+  width: 200px;
   height: auto;
   background-color: var(--second-primary-color);
   border-radius: 30px;
@@ -277,19 +275,19 @@ body {
 }
 
 .page-list-items img {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   background-color: var(--background-color);
   border-radius: 20px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .page-list-items svg {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   background-color: var(--background-color);
   border-radius: 20px;
-  object-fit: cover;
+  object-fit: contain;
   fill: var(--background-color);
 }
 
