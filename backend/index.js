@@ -49,14 +49,20 @@ async function connectToDatabase() {
   console.log("Attempting to connect to MongoDB...");
 
   try {
-    await mongoose.connect(mongoURI);
+    await mongoose.connect(mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
     console.log("Connected to MongoDB!");
   } catch (err) {
     console.error("Database connection failed:", err);
     console.log("Retrying in 5 seconds...");
-    setTimeout(connectToDatabase, 5000);
-  } finally {
-    isConnecting = false;
+    setTimeout(() => {
+      isConnecting = false;
+      connectToDatabase();
+    }, 5000);
   }
 }
 
@@ -69,7 +75,6 @@ db.on("disconnected", () => {
 });
 db.on("error", (err) => {
   console.error("MongoDB connection error:", err);
-  mongoose.disconnect();
 });
 
 connectToDatabase();
