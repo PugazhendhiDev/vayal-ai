@@ -118,7 +118,7 @@ function AgriDataHome() {
             <div className="page-list">
               {imageData.map((val, index) => (
                 <Link
-                  className="page-list-items page-list-items-data"
+                  className="page-list-items"
                   to={`/agriData/${val._id}`}
                   key={index}
                 >
@@ -128,6 +128,7 @@ function AgriDataHome() {
                     }.jpg`}
                     alt={val.name}
                   />
+                  <h3>Name</h3>
                   <p>
                     {val.name.length >= 14
                       ? `${val.name.substring(0, 14)}...`

@@ -157,6 +157,10 @@ function AgriData() {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
+                    })}
+                  </p>
+                  <p>
+                    {new Date(val.created_at).toLocaleString("en-GB", {
                       hour: "2-digit",
                       minute: "2-digit",
                       hour12: true,
