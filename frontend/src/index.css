@@ -270,16 +270,12 @@ body {
   color: var(--secondary-text-color);
 }
 
-.page-list-items-data {
-  height: 190px;
-}
-
 .page-list-items img {
   width: 200px;
   height: 200px;
   background-color: var(--background-color);
   border-radius: 20px;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .page-list-items svg {
@@ -287,7 +283,7 @@ body {
   height: 200px;
   background-color: var(--background-color);
   border-radius: 20px;
-  object-fit: contain;
+  object-fit: cover;
   fill: var(--background-color);
 }
 
@@ -299,6 +295,11 @@ body {
 .page-list-items svg:hover {
   scale: 1.05;
   border-radius: 25px;
+}
+
+.page-list-items h3 {
+  text-align: center;
+  margin: 5px 0 0 0;
 }
 
 .page-list-items p {
@@ -547,6 +548,7 @@ body {
   gap: 10px;
   margin-top: 20px;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .Terms-Of-Use-And-Privacy-Policy-p {
@@ -587,8 +589,8 @@ body {
 }
 
 .page-weather {
-  width: 150px;
-  height: auto;
+  width: 200px;
+  height: 250px;
   background-color: var(--second-primary-color);
   border-radius: 30px;
   padding: 10px;
@@ -596,8 +598,8 @@ body {
 }
 
 .page-weather img {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   background-color: var(--background-color);
   border-radius: 20px;
   object-fit: cover;
@@ -653,7 +655,6 @@ body {
   overflow-x: hidden;
   justify-content: center;
   margin: 10px 0;
-  padding: 10px;
 }
 
 .page-forecast-group {
@@ -662,6 +663,7 @@ body {
   overflow-x: auto;
   margin: 0 20px;
   scrollbar-width: thin;
+  padding-bottom: 10px;
 }
 
 .page-forecast-card {
