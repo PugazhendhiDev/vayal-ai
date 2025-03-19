@@ -5,6 +5,8 @@ import { auth } from "../configuration/firebase";
 import DeleteIcon from "../assets/deleteIcon";
 import PlusIcon from "../assets/plusIcon";
 
+import { ToastContainer, toast } from "react-toastify";
+
 function AgriData() {
   const navigate = useNavigate();
   const [imageData, setImageData] = useState([]);
@@ -114,14 +116,20 @@ function AgriData() {
           },
         }
       );
-      navigate(-1);
+
+      toast.success("Data deleted.", {
+        onClose: () => {
+          navigate(-1);
+        },
+      });
     } catch (error) {
-      console.error("Agri data deletion unsuccessful.");
+      toast.error("Agri data deletion unsuccessful.");
     }
   }
 
   return (
     <>
+      <ToastContainer />
       <div className="page-wrapper">
         <div className="page-container">
           <div className="page-header">

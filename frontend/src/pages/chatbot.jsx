@@ -10,6 +10,8 @@ import PlusIcon from "../assets/plusIcon";
 import DeleteIcon from "../assets/deleteIcon";
 import CameraIcon from "../assets/cameraIcon";
 
+import { ToastContainer, toast } from "react-toastify";
+
 import imageCompressor from "../configuration/imageCompressor";
 import {
   isAndroid,
@@ -262,6 +264,8 @@ function ChatBot() {
         }
       );
 
+      toast.success("Data deleted.");
+
       if (result) {
         axios.defaults.withCredentials = true;
         const result = await axios.get(
@@ -278,7 +282,7 @@ function ChatBot() {
         }
       }
     } catch (error) {
-      console.error("Error submitting chat:", error);
+      toast.error("Error submitting chat:", error);
     } finally {
       setId(null);
       setContent([]);
@@ -392,6 +396,7 @@ function ChatBot() {
 
   return (
     <>
+      <ToastContainer />
       <div className="page-wrapper">
         <div className="page-container">
           <div className="page-header">

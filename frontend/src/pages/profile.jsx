@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { signOut } from "firebase/auth";
 import { auth } from "../configuration/firebase";
+import SettingsIcon from "../assets/settingsIcon";
 
 function Profile() {
   const navigate = useNavigate();
@@ -98,6 +99,9 @@ function Profile() {
       <div className="page-container">
         <div className="page-header">
           <h1 className="page-title">Profile</h1>
+          <Link className="page-profile" to="/settings">
+            <SettingsIcon />
+          </Link>
         </div>
         <div className="page-body">
           <div className="page-profile-wrapper">

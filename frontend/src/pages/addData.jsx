@@ -16,6 +16,8 @@ import ImagePlaceholder from "../assets/imagePlaceholder";
 import CameraIcon from "../assets/cameraIcon";
 import PlusIcon from "../assets/plusIcon";
 
+import { ToastContainer, toast } from "react-toastify";
+
 function AddData() {
   const [agriName, setAgriName] = useState("");
   const [image, setImage] = useState(null);
@@ -146,7 +148,7 @@ function AddData() {
         })
         .catch((err) => {
           setIsSubmit(false);
-          console.log(err);
+          toast.error(err);
         });
     } else {
       setIsSubmit(false);
@@ -156,107 +158,123 @@ function AddData() {
   };
 
   return (
-    <div className="page-wrapper">
-      <div className="page-container">
-        <div className="page-header">
-          <h1 className="page-title">{import.meta.env.VITE_APP_NAME}</h1>
-          <Link className="page-profile" to="/profile">
-            <ProfileIcon />
-          </Link>
-        </div>
+    <>
+      <ToastContainer />
+      <div className="page-wrapper">
+        <div className="page-container">
+          <div className="page-header">
+            <h1 className="page-title">{import.meta.env.VITE_APP_NAME}</h1>
+            <Link className="page-profile" to="/profile">
+              <ProfileIcon />
+            </Link>
+          </div>
 
-        <div className="page-body">
-          <div className="page-form-wrapper">
-            <form className="page-form" onSubmit={addData}>
-              <div className="page-form-upload-image-preview">
-                {image ? (
-                  <img src={image} alt="Selected" />
+          <div className="page-body">
+            <div className="page-form-wrapper">
+              <form className="page-form" onSubmit={addData}>
+                <div className="page-form-upload-image-preview">
+                  {image ? (
+                    <img src={image} alt="Selected" />
+                  ) : (
+                    <ImagePlaceholder />
+                  )}
+                </div>
+                {isCam ? (
+                  <>
+                    <input
+                      className="page-form-input-file"
+                      type="file"
+                      name="agri_image"
+                      accept="image/*"
+                      capture="environment"
+                      ref={camInputRef}
+                      onChange={handleImageChange}
+                      hidden
+                    />
+                    <input
+                      className="page-form-input-file"
+                      type="file"
+                      name="agri_image"
+                      accept="image/*"
+                      ref={fileInputRef}
+                      onChange={handleImageChange}
+                      hidden
+                    />
+                    <div className="page-form-upload-btn">
+                      <div
+                        className="page-form-cam-btn"
+                        onClick={handleCamClick}
+                      >
+                        <CameraIcon />
+                      </div>
+                      <div
+                        className="page-form-add-btn"
+                        onClick={handleAddClick}
+                      >
+                        <PlusIcon />
+                      </div>
+                    </div>
+                    <label className="page-form-label">
+                      Click the cam/plus icon to upload image.
+                    </label>
+                  </>
                 ) : (
-                  <ImagePlaceholder />
+                  <>
+                    <input
+                      className="page-form-input-file"
+                      type="file"
+                      name="agri_image"
+                      accept="image/*"
+                      ref={fileInputRef}
+                      onChange={handleImageChange}
+                      hidden
+                    />
+                    <div className="page-form-upload-btn">
+                      <div
+                        className="page-form-add-btn"
+                        onClick={handleAddClick}
+                      >
+                        <PlusIcon />
+                      </div>
+                    </div>
+                    <label className="page-form-label">
+                      Click plus icon to upload image.
+                    </label>
+                  </>
                 )}
-              </div>
-              {isCam ? (
-                <>
-                  <input
-                    className="page-form-input-file"
-                    type="file"
-                    name="agri_image"
-                    accept="image/*"
-                    capture="environment"
-                    ref={camInputRef}
-                    onChange={handleImageChange}
-                    hidden
-                  />
-                  <input
-                    className="page-form-input-file"
-                    type="file"
-                    name="agri_image"
-                    accept="image/*"
-                    ref={fileInputRef}
-                    onChange={handleImageChange}
-                    hidden
-                  />
-                  <div className="page-form-upload-btn">
-                    <div className="page-form-cam-btn" onClick={handleCamClick}>
-                      <CameraIcon />
-                    </div>
-                    <div className="page-form-add-btn" onClick={handleAddClick}>
-                      <PlusIcon />
-                    </div>
-                  </div>
-                  <label className="page-form-label">
-                    Click the cam/plus icon to upload image.
-                  </label>
-                </>
-              ) : (
-                <>
-                  <input
-                    className="page-form-input-file"
-                    type="file"
-                    name="agri_image"
-                    accept="image/*"
-                    ref={fileInputRef}
-                    onChange={handleImageChange}
-                    hidden
-                  />
-                  <div className="page-form-upload-btn">
-                    <div className="page-form-add-btn" onClick={handleAddClick}>
-                      <PlusIcon />
-                    </div>
-                  </div>
-                  <label className="page-form-label">
-                    Click plus icon to upload image.
-                  </label>
-                </>
-              )}
-              <label className="page-form-label" htmlFor="email">
-                Name
-              </label>
-              <input
-                className="page-form-input"
-                type="text"
-                name="agri-name"
-                placeholder="Enter the name"
-                value={agriName}
-                onChange={(e) => {
-                  setAgriName(e.target.value);
-                }}
-                required
-              />
-              {isSubmit ? (
-                <button className="page-form-submit-btn" type="submit" disabled>
-                  <PulseLoader size={5} color={loaderColor} />
-                </button>
-              ) : (
-                <button className="page-form-submit-btn" type="submit">
-                  Submit
-                </button>
-              )}
-            </form>
+                <label className="page-form-label" htmlFor="email">
+                  Name
+                </label>
+                <input
+                  className="page-form-input"
+                  type="text"
+                  name="agri-name"
+                  placeholder="Enter the name"
+                  value={agriName}
+                  onChange={(e) => {
+                    setAgriName(e.target.value);
+                  }}
+                  required
+                />
+                {isSubmit ? (
+                  <button
+                    className="page-form-submit-btn"
+                    type="submit"
+                    disabled
+                  >
+                    <PulseLoader size={5} color={loaderColor} />
+                  </button>
+                ) : (
+                  <button className="page-form-submit-btn" type="submit">
+                    Submit
+                  </button>
+                )}
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

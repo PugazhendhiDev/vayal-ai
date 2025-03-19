@@ -4,6 +4,8 @@ import axios from "axios";
 import { auth } from "../configuration/firebase";
 import DeleteIcon from "../assets/deleteIcon";
 
+import { ToastContainer, toast } from "react-toastify";
+
 function CompleteAgriData() {
   const navigate = useNavigate();
   const [content, setContent] = useState({});
@@ -114,44 +116,51 @@ function CompleteAgriData() {
           },
         }
       );
-      navigate(-1);
+      toast.success("Data deleted.", {
+        onClose: () => {
+          navigate(-1);
+        },
+      });
     } catch (error) {
-      console.error("Agri data deletion unsuccessful.");
+      toast.error("Agri data deletion unsuccessful.");
     }
   }
 
   return (
-    <div className="page-wrapper">
-      <div className="page-container">
-        <div className="page-header">
-          <h1 className="page-title">{import.meta.env.VITE_APP_NAME}</h1>
-          <div className="page-delete" onClick={handleDelete}>
-            <DeleteIcon />
-          </div>
-        </div>
-
-        <div className="page-body">
-          <div className="page-content-wrapper">
-            <div className="page-content-image-wrapper">
-              <img
-                className="page-content-image"
-                src={
-                  content.image_name &&
-                  `${import.meta.env.VITE_CDN_SERVER_URL}/${
-                    content.image_name
-                  }.jpg`
-                }
-                alt={content.image_name}
-              />
+    <>
+      <ToastContainer />
+      <div className="page-wrapper">
+        <div className="page-container">
+          <div className="page-header">
+            <h1 className="page-title">{import.meta.env.VITE_APP_NAME}</h1>
+            <div className="page-delete" onClick={handleDelete}>
+              <DeleteIcon />
             </div>
-            <div
-              className="page-content-text"
-              dangerouslySetInnerHTML={{ __html: content.content }}
-            ></div>
+          </div>
+
+          <div className="page-body">
+            <div className="page-content-wrapper">
+              <div className="page-content-image-wrapper">
+                <img
+                  className="page-content-image"
+                  src={
+                    content.image_name &&
+                    `${import.meta.env.VITE_CDN_SERVER_URL}/${
+                      content.image_name
+                    }.jpg`
+                  }
+                  alt={content.image_name}
+                />
+              </div>
+              <div
+                className="page-content-text"
+                dangerouslySetInnerHTML={{ __html: content.content }}
+              ></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
