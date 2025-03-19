@@ -14,12 +14,10 @@ function getOtpForEmailVerification(transporter, appName, myEmail) {
       const userExists = await userOtp.findOne({ email });
 
       if (userExists) {
-        return res.status(400).json({ error: "Email already exists" });
+        await userOtp.deleteOne({ email });
       }
 
       const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
-      await userOtp.deleteOne({ email });
 
       await userOtp.create({ email, otp });
 
