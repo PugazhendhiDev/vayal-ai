@@ -19,6 +19,7 @@ const signup = require("./routes/signup.js");
 const signin = require("./routes/signin.js");
 const signout = require("./routes/signout.js");
 const resetPassword = require("./routes/resetPassword.js");
+const changePassword = require("./routes/changePassword.js");
 const getAgriData = require("./routes/getAgriData.js");
 const addAgriData = require("./routes/addAgriData.js");
 const deleteData = require("./routes/deleteData.js");
@@ -144,6 +145,7 @@ const authenticateToken = async (req, res, next) => {
       .verifyIdToken(idToken)
       .then((decodedToken) => {
         req.uid = decodedToken.uid;
+        req.email = decodedToken.email;
         next();
       })
       .catch((error) => {
@@ -174,6 +176,17 @@ app.get("/api/signout", clearCache, authenticateToken, signout());
 app.post(
   "/api/resetPassword",
   resetPassword(
+    admin,
+    transporter,
+    process.env.APP_NAME,
+    process.env.NODEMAILER_EMAIL
+  )
+);
+
+app.get(
+  "/api/changePassword",
+  authenticateToken,
+  changePassword(
     admin,
     transporter,
     process.env.APP_NAME,
