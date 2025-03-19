@@ -127,7 +127,11 @@ function Signup() {
             { idToken, Terms_Of_Use_And_Privacy_Policy: true }
           );
           if (user.data.message) {
-            navigate("/");
+            toast.success("You have signed up successfully.", {
+              onClose: () => {
+                navigate("/");
+              },
+            });
           }
         } catch (error) {
           const errorMessage = error.response
@@ -151,6 +155,7 @@ function Signup() {
           { email: value.email }
         );
         setEmailVerifyValue(true);
+        toast.success("OTP sent successfully.");
         setTimer(60);
         setOtpSendButton(false);
       } catch (error) {

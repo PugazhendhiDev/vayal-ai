@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
 import { auth } from "../configuration/firebase";
 
 import { ToastContainer, toast } from "react-toastify";
 
-function ForgotPassword() {
+function ChangePassword() {
   const [resetValue, setResetValue] = useState(false);
   const navigate = useNavigate();
   const loaderColor = getComputedStyle(document.documentElement)
     .getPropertyValue("--primary-text-color")
     .trim();
+
+  const [uidToken, setUidToken] = useState(null);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -26,8 +28,10 @@ function ForgotPassword() {
             idToken = await user.getIdToken(true);
           }
 
+          setUidToken(idToken);
+
           try {
-            const res = await axios.get(
+            await axios.get(
               `${import.meta.env.VITE_SERVER_URL}/api/verifyToken`,
               {
                 headers: {
@@ -35,15 +39,12 @@ function ForgotPassword() {
                 },
               }
             );
-
-            if (res) {
-              navigate("/");
-            }
           } catch (verifyError) {
             if (verifyError.response && verifyError.response.status === 401) {
               try {
                 const refreshedToken = await user.getIdToken(true);
-                const res = await axios.get(
+                setUidToken(refreshedToken);
+                await axios.get(
                   `${import.meta.env.VITE_SERVER_URL}/api/verifyToken`,
                   {
                     headers: {
@@ -51,41 +52,39 @@ function ForgotPassword() {
                     },
                   }
                 );
-
-                if (res) {
-                  navigate("/");
-                }
               } catch (refreshError) {
                 console.error("Token refresh failed:", refreshError);
+                navigate("/signin");
               }
             } else {
               console.error("Token verification error:", verifyError);
+              navigate("/signin");
             }
           }
         } catch (getTokenError) {
           console.error("Error getting ID token:", getTokenError);
+          navigate("/signin");
         }
       } else {
-        console.error("Error getting User");
+        setUidToken(null);
+        navigate("/signin");
       }
     });
 
     return () => unsubscribe();
   }, [navigate]);
 
-  const [value, setValue] = useState({
-    email: "",
-  });
-
-  const resetPassword = async (e) => {
+  const changePassword = async (e) => {
     e.preventDefault();
     setResetValue(true);
     try {
       axios.defaults.withCredentials = true;
-      const res = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/api/resetPassword`,
+      const res = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/api/changePassword`,
         {
-          email: value.email,
+          headers: {
+            Authorization: "Bearer " + uidToken,
+          },
         }
       );
       if (res) {
@@ -101,58 +100,29 @@ function ForgotPassword() {
       console.error("Error fetching user validation");
     }
   };
-
   return (
     <>
       <ToastContainer />
       <div className="auth-form-container">
-        <form className="auth-form" onSubmit={resetPassword}>
-          <h1 className="auth-h1">Forgot Password</h1>
-          <label className="auth-label" htmlFor="email">
-            Email:
-          </label>
-          <input
-            className="auth-input"
-            type="email"
-            name="email"
-            placeholder="Enter your Email"
-            value={value.email}
-            onChange={(e) =>
-              setValue({
-                ...value,
-                email: e.target.value,
-              })
-            }
-            required
-          />
+        <form className="auth-form" onSubmit={changePassword}>
+          <h1 className="auth-h1">Change Password</h1>
+          <p>
+            After you click on "Change Password," we will send a reset link to
+            your email.
+          </p>
           {resetValue ? (
             <button className="auth-submit-btn" type="submit" disabled>
               <PulseLoader size={5} color={loaderColor} />
             </button>
           ) : (
             <button className="auth-submit-btn" type="submit">
-              Reset
+              Change Password
             </button>
           )}
         </form>
-        <p className="Terms-Of-Use-And-Privacy-Policy-p">
-          <Link
-            className="Terms-Of-Use-And-Privacy-Policy-link"
-            to="/TermsOfUse"
-          >
-            Terms of Use
-          </Link>{" "}
-          |{" "}
-          <Link
-            className="Terms-Of-Use-And-Privacy-Policy-link"
-            to="/PrivacyPolicy"
-          >
-            Privacy Policy
-          </Link>
-        </p>
       </div>
     </>
   );
 }
 
-export default ForgotPassword;
+export default ChangePassword;
