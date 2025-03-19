@@ -15,6 +15,8 @@ import ChatBot from "./pages/chatbot.jsx";
 import AgriDataHome from "./pages/agriDataHome.jsx";
 import NewsData from "./pages/newsData.jsx";
 import ShopData from "./pages/shopData.jsx";
+import Settings from "./pages/settings.jsx";
+import ChangePassword from "./authentication/changepassword.jsx";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
         <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
         <Route path="/addData" element={<AddData />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/changePassword" element={<ChangePassword />} />
         <Route path="/agriData/:id" element={<AgriData />} />
         <Route path="/addAgriData/:id" element={<AddAgriData />} />
         <Route path="/completeAgriData/:id" element={<CompleteAgriData />} />
