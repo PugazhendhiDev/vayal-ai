@@ -10,8 +10,7 @@
 
 const char *apSSID = "VayalAI-Device";
 const char *apPassword = "12345678";    
-const char *serverIP = "Server-IP";
-const int serverPort = 443;
+const char *serverIP = "Server-Address";
 
 String ssid = "", password = "", deviceId = "";
 ESP8266WebServer server(80);
@@ -65,10 +64,10 @@ void webSocketEvent(WStype_t type, uint8_t *payload, size_t length) {
         Serial.println("Command Received: " + message);
         if (message.equals("start")) {
             digitalWrite(RELAY_PIN, LOW);
-            Serial.println("Irrigation Started");
+            Serial.println("Started");
         } else if (message.equals("stop")) {
             digitalWrite(RELAY_PIN, HIGH);
-            Serial.println("Irrigation Stopped");
+            Serial.println("Stopped");
         }
     } else if (type == WStype_DISCONNECTED) {
         Serial.println("WebSocket Disconnected");
@@ -150,7 +149,7 @@ void handleConnect() {
     if (WiFi.status() == WL_CONNECTED) {
         Serial.println("\nConnected!");
         isConnected = true;
-        webSocket.beginSSL(serverIP, serverPort, "/");
+        webSocket.beginSSL(serverIP, 443, "/");
         webSocket.onEvent(webSocketEvent);
     } else {
         Serial.println("\nFailed! Restarting AP mode...");
@@ -173,7 +172,7 @@ void setup() {
         WiFi.setHostname(apSSID);
         WiFi.begin(ssid.c_str(), password.c_str());
 
-        Serial.println("Connecting to saved WiFi...");
+        Serial.println("🌍 Connecting to saved WiFi...");
         int attempts = 0;
         while (WiFi.status() != WL_CONNECTED && attempts < 20) {
             delay(1000); Serial.print(".");
@@ -183,7 +182,7 @@ void setup() {
         if (WiFi.status() == WL_CONNECTED) {
             Serial.println("\nConnected!");
             isConnected = true;
-            webSocket.beginSSL(serverIP, serverPort, "/");
+            webSocket.beginSSL(serverIP, 443, "/");
             webSocket.onEvent(webSocketEvent);
         } else {
             Serial.println("\nFailed! Starting AP mode...");
