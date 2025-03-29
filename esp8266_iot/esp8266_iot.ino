@@ -11,7 +11,7 @@
 const char *apSSID = "VayalAI-Device";
 const char *apPassword = "12345678";    
 const char *serverIP = "Server-IP";
-const int serverPort = 3001;
+const int serverPort = 443;
 
 String ssid = "", password = "", deviceId = "";
 ESP8266WebServer server(80);
@@ -150,7 +150,7 @@ void handleConnect() {
     if (WiFi.status() == WL_CONNECTED) {
         Serial.println("\nConnected!");
         isConnected = true;
-        webSocket.begin(serverIP, serverPort, "/");
+        webSocket.beginSSL(serverIP, serverPort, "/");
         webSocket.onEvent(webSocketEvent);
     } else {
         Serial.println("\nFailed! Restarting AP mode...");
@@ -183,7 +183,7 @@ void setup() {
         if (WiFi.status() == WL_CONNECTED) {
             Serial.println("\nConnected!");
             isConnected = true;
-            webSocket.begin(serverIP, serverPort, "/");
+            webSocket.beginSSL(serverIP, serverPort, "/");
             webSocket.onEvent(webSocketEvent);
         } else {
             Serial.println("\nFailed! Starting AP mode...");
