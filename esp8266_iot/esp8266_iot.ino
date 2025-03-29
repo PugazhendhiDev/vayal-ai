@@ -10,7 +10,7 @@
 
 const char *apSSID = "VayalAI-Device";
 const char *apPassword = "12345678";    
-const char *serverIP = "Server-Address";
+const char *serverIP = "Server_Address";
 
 String ssid = "", password = "", deviceId = "";
 ESP8266WebServer server(80);
@@ -53,7 +53,7 @@ void factoryReset() {
 
 void webSocketEvent(WStype_t type, uint8_t *payload, size_t length) {
     if (type == WStype_CONNECTED) {
-        Serial.println("🔗 WebSocket Connected!");
+        Serial.println("WebSocket Connected!");
         if (deviceId.length() > 0) {
             String message = "{\"deviceId\":\"" + deviceId + "\"}";
             webSocket.sendTXT(message.c_str());
@@ -172,7 +172,7 @@ void setup() {
         WiFi.setHostname(apSSID);
         WiFi.begin(ssid.c_str(), password.c_str());
 
-        Serial.println("🌍 Connecting to saved WiFi...");
+        Serial.println("Connecting to saved WiFi...");
         int attempts = 0;
         while (WiFi.status() != WL_CONNECTED && attempts < 20) {
             delay(1000); Serial.print(".");
