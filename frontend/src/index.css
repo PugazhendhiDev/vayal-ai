@@ -496,6 +496,15 @@ body {
   background-color: var(--secondary-color);
 }
 
+.page-form-select {
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  padding: 20px 50px;
+  background-color: var(--secondary-color);
+  cursor: pointer;
+}
+
 .page-form-submit-btn {
   border-radius: 20px;
   padding: 10px 20px;
@@ -945,6 +954,95 @@ hr {
 .page-shop-items a {
   text-decoration: none;
   color: var(--secondary-text-color);
+}
+
+.list-view-wrapper {
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.text-list-view {
+  padding: 20px 10px;
+  word-wrap: break-word;
+  border-bottom: 2px solid var(--secondary-color);
+  color: var(--secondary-text-color);
+}
+
+.text-list-view .link {
+  text-decoration: none;
+  color: var(--secondary-text-color);
+}
+
+.iot-details-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.iot-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.switch-btn {
+  width: 50px;
+  height: 24px;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.switch-handle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  background: white;
+  transition: transform 0.3s ease;
+}
+
+.switch-on {
+  background: #4caf50;
+}
+
+.switch-on .switch-handle {
+  transform: translateX(26px);
+}
+
+.switch-off {
+  background: #ccc;
+}
+
+.switch-off .switch-handle {
+  transform: translateX(0);
+}
+
+.iot-device-delete {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  border: none;
+  background-color: var(--secondary-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.copy-btn {
+  border-radius: 15px;
+  padding: 10px;
+  background-color: var(--active-btn-color);
+  color: var(--background-color);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.copy-btn:hover {
+  background-color: var(--hover-color);
 }
 
 @media (min-width: 590px) {

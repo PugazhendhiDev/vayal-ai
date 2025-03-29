@@ -9,6 +9,7 @@ const admin = require("firebase-admin");
 const dotenv = require("dotenv");
 const cloudinary = require("cloudinary").v2;
 const mongoose = require("mongoose");
+const http = require("http");
 
 const verifyToken = require("./routes/verifyToken.js");
 const addData = require("./routes/addData.js");
@@ -32,6 +33,12 @@ const deleteChatHistory = require("./routes/deleteChatHistory.js");
 const getChatData = require("./routes/getChatData.js");
 const addChatData = require("./routes/addChatData.js");
 const shopData = require("./routes/shopData.js");
+const getDevice = require("./routes/getDevice.js");
+const addDevice = require("./routes/addDevice.js");
+const deleteDevice = require("./routes/deleteDevice.js");
+
+const { setupWebSocket } = require("./configuration/websocket.js");
+const updateDevice = require("./routes/updateDevice.js");
 
 const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_CREDENTIALS);
 
@@ -116,6 +123,8 @@ admin.initializeApp({
 });
 
 const app = express();
+const server = http.createServer(app);
+setupWebSocket(server);
 
 const corsOptions = {
   origin: process.env.FRONTEND_URL,
@@ -247,6 +256,14 @@ app.post(
   addChatData(handleUpload, handleDelete)
 );
 
+app.get("/api/getDevice", authenticateToken, getDevice());
+
+app.post("/api/addDevice", authenticateToken, addDevice());
+
+app.put("/api/updateDevice", authenticateToken, updateDevice());
+
+app.delete("/api/deleteDevice", authenticateToken, deleteDevice());
+
 app.use(express.static(path.join(__dirname, "client/build")));
 
 app.get("*", (req, res) => {
@@ -255,6 +272,6 @@ app.get("*", (req, res) => {
 
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, "0.0.0.0", () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on http://0.0.0.0:${PORT}`);
 });

@@ -144,7 +144,7 @@ function AddData() {
         })
         .then((res) => {
           setIsSubmit(false);
-          navigate("/agriDataHome");
+          navigate(-1);
         })
         .catch((err) => {
           setIsSubmit(false);
@@ -242,9 +242,6 @@ function AddData() {
                     </label>
                   </>
                 )}
-                <label className="page-form-label" htmlFor="email">
-                  Name
-                </label>
                 <input
                   className="page-form-input"
                   type="text"

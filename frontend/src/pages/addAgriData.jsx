@@ -246,13 +246,10 @@ function AddAgriData() {
                     </label>
                   </>
                 )}
-                <label className="page-form-label" htmlFor="email">
-                  Name
-                </label>
                 <input
                   className="page-form-input"
                   type="text"
-                  name="agri-name"
+                  name="agri-prompt"
                   placeholder="Enter the prompt (optional)"
                   value={prompt}
                   onChange={(e) => {

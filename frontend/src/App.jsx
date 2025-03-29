@@ -17,6 +17,8 @@ import NewsData from "./pages/newsData.jsx";
 import ShopData from "./pages/shopData.jsx";
 import Settings from "./pages/settings.jsx";
 import ChangePassword from "./authentication/changepassword.jsx";
+import MyDevice from "./pages/myDevice.jsx";
+import AddDevice from "./pages/addDevice.jsx";
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
         <Route path="/chatBot" element={<ChatBot />} />
         <Route path="/news" element={<NewsData />} />
         <Route path="/shopData" element={<ShopData />} />
+        <Route path="/myDevice" element={<MyDevice />} />
+        <Route path="/addDevice" element={<AddDevice />} />
       </Routes>
     </BrowserRouter>
   );

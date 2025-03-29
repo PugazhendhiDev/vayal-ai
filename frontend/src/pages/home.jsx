@@ -9,6 +9,7 @@ import ChatbotIcon from "../assets/chatbotIcon";
 import FarmIcon from "../assets/farmIcon";
 import NewsIcon from "../assets/newsIcon";
 import ShopIcon from "../assets/shopIcon";
+import IotIcon from "../assets/iotIcon";
 
 function Home() {
   const navigate = useNavigate();
@@ -221,6 +222,14 @@ function Home() {
                   My
                   <br />
                   Farm
+                </p>
+              </Link>
+              <Link className="page-list-items" to={"/myDevice"}>
+                <IotIcon />
+                <p>
+                  My
+                  <br />
+                  Devices
                 </p>
               </Link>
               <Link className="page-list-items" to={"/shopData"}>
