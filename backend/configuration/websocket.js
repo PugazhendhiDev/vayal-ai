@@ -2,14 +2,12 @@ const WebSocket = require("ws");
 const iotDevice = require("../models/iotDevice");
 
 const clients = {};
-const pingInterval = 25000;
+const pingInterval = 30000;
 
 function setupWebSocket(server) {
   const wss = new WebSocket.Server({ server });
 
-  console.log("WebSocket Server Running on Port 3001 (HTTPS)");
-
-  wss.on("connection", (ws, req) => {
+  wss.on("connection", (ws) => {
     ws.isAlive = true;
 
     ws.on("pong", () => {
@@ -39,10 +37,7 @@ function setupWebSocket(server) {
             { status: "Online" }
           );
         }
-
-        console.log(`Device Connected: ${data.deviceId}`);
       } catch (error) {
-        console.error("Error processing message:", error);
         ws.close();
       }
     });
@@ -50,20 +45,11 @@ function setupWebSocket(server) {
     ws.on("close", async () => {
       handleDisconnection(ws);
     });
-
-    ws.on("error", (err) => {
-      console.error(`WebSocket Error: ${err.message}`);
-    });
-
-    ws.on("unexpected-response", (req, res) => {
-      console.error("Unexpected Response:", res.statusCode);
-    });
   });
 
   setInterval(() => {
     wss.clients.forEach((ws) => {
       if (!ws.isAlive) {
-        console.log(`⚠️ Connection Lost: ${ws.deviceId || "Unknown"}`);
         handleDisconnection(ws);
         ws.terminate();
       } else {
@@ -92,8 +78,6 @@ async function handleDisconnection(ws) {
     ) {
       ws.terminate();
     }
-
-    console.log(`Device Disconnected: ${ws.deviceId}`);
   }
 }
 
@@ -106,16 +90,14 @@ async function sendCommand(deviceId, command) {
         clients[deviceId].terminate();
         delete clients[deviceId];
       }
-      console.log(`Device Not Found: ${deviceId}`);
+
       return false;
     }
 
     if (clients[deviceId]) {
       clients[deviceId].send(command);
-      console.log(`Command Sent to ${deviceId}: ${command}`);
       return true;
     } else {
-      console.log(`Device Not Connected: ${deviceId}`);
       return false;
     }
   } catch (error) {
