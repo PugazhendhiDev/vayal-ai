@@ -79,7 +79,7 @@ DEFAULT_TEXT_PROMPT=your_default_text_prompt
 5. Start the frontend:
    ```powershell
    cd frontend
-    npm run dev
+   npm run dev
    ```
 
 ## Deployment
