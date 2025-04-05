@@ -3,14 +3,14 @@
 #include <WebSocketsClient.h>
 #include <EEPROM.h>
 
-#define RELAY_PIN LED_BUILTIN
+#define RELAY_PIN D4
 #define FLASH_BUTTON_PIN 0
 #define RESET_FLAG_ADDR 99
 #define EEPROM_SIZE 100
 
 const char *apSSID = "VayalAI-Device";
 const char *apPassword = "12345678";    
-const char *serverIP = "Server_Address";
+const char *serverIP = "vayal-ai.onrender.com";
 
 String ssid = "", password = "", deviceId = "";
 ESP8266WebServer server(80);
@@ -63,10 +63,10 @@ void webSocketEvent(WStype_t type, uint8_t *payload, size_t length) {
         String message = String((char*)payload);
         Serial.println("Command Received: " + message);
         if (message.equals("start")) {
-            digitalWrite(RELAY_PIN, LOW);
+            digitalWrite(RELAY_PIN, HIGH);
             Serial.println("Started");
         } else if (message.equals("stop")) {
-            digitalWrite(RELAY_PIN, HIGH);
+            digitalWrite(RELAY_PIN, LOW);
             Serial.println("Stopped");
         }
     } else if (type == WStype_DISCONNECTED) {
@@ -162,7 +162,7 @@ void setup() {
     Serial.println("\nDevice Booting...");
 
     pinMode(RELAY_PIN, OUTPUT);
-    digitalWrite(RELAY_PIN, HIGH);
+    digitalWrite(RELAY_PIN, LOW);
     pinMode(FLASH_BUTTON_PIN, INPUT_PULLUP);
 
     EEPROM.begin(EEPROM_SIZE);

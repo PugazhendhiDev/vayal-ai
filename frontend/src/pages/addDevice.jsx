@@ -137,8 +137,7 @@ function AddDevice() {
                   required
                 >
                   <option value="">Select a type</option>
-                  <option value="Irrigation">Irrigation</option>
-                  <option value="Monitoring">Monitoring</option>
+                  <option value="Greenhouse LED">Greenhouse LED</option>
                 </select>
                 {isSubmit ? (
                   <button

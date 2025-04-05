@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const iotDeviceSchema = new mongoose.Schema({
     userUid: { type: String, required: true },
     name: { type: String, required: true },
-    type: { type: String, enum: ["Irrigation", "Monitoring"], required: true },
+    type: { type: String, enum: ["Greenhouse LED"], required: true },
     status: { type: String, enum: ["Online", "Offline"], default: "Offline" },
     isWorking: { type: Boolean, default: false },
     lastData: { type: Object, default: {} },
