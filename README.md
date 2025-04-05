@@ -100,6 +100,10 @@ DEFAULT_TEXT_PROMPT=your_default_text_prompt
 - **Nithyasree Satish**
 - **Ragavi Raksha V**
 
+## Video Demonstration
+
+Watch our project demo on YouTube: [Vayal AI Demo](https://www.youtube.com/watch?v=4weySbpSMMw)
+
 ## License
 
 This project is open-source under the [MIT License](LICENSE).
