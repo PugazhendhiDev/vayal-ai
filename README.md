@@ -96,9 +96,9 @@ DEFAULT_TEXT_PROMPT=your_default_text_prompt
 ## Team Members
 
 - **Pugazhendhi D** (Team Leader)
-- **Nithish Kumar P**
-- **Nithyasree Satish**
-- **Ragavi Raksha V**
+- **Nithish Kumar P** - https://github.com/Nithish-codes
+- **Nithyasree Satish** - https://github.com/Nithyasree31819
+- **Ragavi Raksha V** - https://github.com/ragaviraksha-165
 
 ## Video Demonstration
 
